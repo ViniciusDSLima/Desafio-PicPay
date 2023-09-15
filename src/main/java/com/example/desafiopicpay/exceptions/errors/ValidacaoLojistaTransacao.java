@@ -1,4 +1,4 @@
-package com.example.desafiopicpay.exceptions;
+package com.example.desafiopicpay.exceptions.errors;
 
 public class ValidacaoLojistaTransacao extends RuntimeException{
 
