@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 import static com.example.desafiopicpay.enums.errorsMessage.InsufficientFundsMessage.SALDO_INSUFICIENTE_MESSAGE;
+import static com.example.desafiopicpay.enums.errorsMessage.UserNotFoundMessage.USUARIO_NAO_ENCONTRADO;
 import static com.example.desafiopicpay.enums.errorsMessage.ValidacaoLogistaTransacaoMessage.LOGISTA_TRANSACAO_MESSAGE;
 import static com.example.desafiopicpay.enums.errorsMessage.ValueNotAllowedMessage.VALOR_NAO_PODE_SER_ZERO;
 
@@ -45,6 +46,6 @@ public class UserService {
 
     public User findById(@Valid String id){
         return (User) userRepository.findById(id).orElseThrow(
-                () -> new UserNotFoundException("usuario nao encontrado"));
+                () -> new UserNotFoundException(USUARIO_NAO_ENCONTRADO.getDescription()));
     }
 }
