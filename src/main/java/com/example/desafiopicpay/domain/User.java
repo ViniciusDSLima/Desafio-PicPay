@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity(name = "Users")
 @Table(name = "Users")
 @Data
@@ -23,6 +25,6 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private TypeUser typeUser;
-
+    private BigDecimal balance;
 
 }
