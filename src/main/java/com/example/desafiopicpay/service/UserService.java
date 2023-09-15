@@ -3,9 +3,12 @@ package com.example.desafiopicpay.service;
 import com.example.desafiopicpay.domain.User;
 import com.example.desafiopicpay.enums.TypeUser;
 import com.example.desafiopicpay.exceptions.errors.InsufficientFunds;
+import com.example.desafiopicpay.exceptions.errors.UserNotFoundException;
 import com.example.desafiopicpay.exceptions.errors.ValidacaoLojistaTransacao;
 import com.example.desafiopicpay.exceptions.errors.ValueNotAllowed;
 import com.example.desafiopicpay.repository.UserRepository;
+import com.example.desafiopicpay.request.UserRegisterRequest;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +37,14 @@ public class UserService {
         if(amount.compareTo(BigDecimal.ZERO) == 0){
             throw new ValueNotAllowed(VALOR_NAO_PODE_SER_ZERO.getDescription());
         }
+    }
+
+    public User save(UserRegisterRequest userRegisterRequest){
+        return userRepository.save(new User(userRegisterRequest));
+    }
+
+    public User findById(@Valid String id){
+        return (User) userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("usuario nao encontrado"));
     }
 }
