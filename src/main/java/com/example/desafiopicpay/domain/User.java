@@ -1,5 +1,6 @@
 package com.example.desafiopicpay.domain;
 
+import com.example.desafiopicpay.enums.TypeUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private TypeUser typeUser;
 
 
 }
