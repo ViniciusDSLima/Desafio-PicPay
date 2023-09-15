@@ -1,5 +1,6 @@
 package com.example.desafiopicpay.exceptions;
 
+import com.example.desafiopicpay.exceptions.errors.UserNotFoundException;
 import com.example.desafiopicpay.exceptions.errors.ValidacaoLojistaTransacao;
 import com.example.desafiopicpay.exceptions.errors.ValueNotAllowed;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(InsufficientResourcesException.class)
-    public ResponseEntity<Error> validacaoLojistaTransacao(InsufficientResourcesException ex,
+    public ResponseEntity<Error> validacaoSalfoInsuficiente(InsufficientResourcesException ex,
                                                            HttpServletRequest request) {
         Error error = new Error(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Saldo insuficiente",
                 ex.getMessage(), request.getRequestURI());
@@ -31,7 +32,7 @@ public class ExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(ValueNotAllowed.class)
-    public ResponseEntity<Error> validacaoLojistaTransacao(ValueNotAllowed ex,
+    public ResponseEntity<Error> validacaoValorNaoAutorizado(ValueNotAllowed ex,
                                                            HttpServletRequest request) {
         Error error = new Error(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(), "Nao e permitido transferir valor negativo.",
                 ex.getMessage(), request.getRequestURI());
@@ -39,4 +40,12 @@ public class ExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Error> validacaoUsuarioNaoEncontrado(UserNotFoundException ex,
+                                                           HttpServletRequest request) {
+        Error error = new Error(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(), "Usuario nao encontrado",
+                ex.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 }
