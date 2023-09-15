@@ -1,13 +1,16 @@
 package com.example.desafiopicpay.service;
 
+import com.example.desafiopicpay.DTO.UserDTO;
 import com.example.desafiopicpay.domain.User;
 import com.example.desafiopicpay.enums.TypeUser;
 import com.example.desafiopicpay.exceptions.errors.InsufficientFunds;
 import com.example.desafiopicpay.exceptions.errors.UserNotFoundException;
 import com.example.desafiopicpay.exceptions.errors.ValidacaoLojistaTransacao;
 import com.example.desafiopicpay.exceptions.errors.ValueNotAllowed;
+import com.example.desafiopicpay.mapper.UserMapper;
 import com.example.desafiopicpay.repository.UserRepository;
 import com.example.desafiopicpay.request.UserRegisterRequest;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,8 +43,11 @@ public class UserService {
         }
     }
 
-    public User save(UserRegisterRequest userRegisterRequest){
-        return userRepository.save(new User(userRegisterRequest));
+    @Transactional
+    public UserDTO save(UserRegisterRequest userRegisterRequest){
+        User user = userRepository.save(new User(userRegisterRequest));
+
+        return UserMapper.INSTANCE.toUserDTO(user);
     }
 
     public User findById(@Valid String id){
