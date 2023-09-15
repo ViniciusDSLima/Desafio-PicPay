@@ -2,6 +2,7 @@ package com.example.desafiopicpay.controller;
 
 import com.example.desafiopicpay.request.UserRegisterRequest;
 import com.example.desafiopicpay.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public ResponseEntity save(@RequestBody UserRegisterRequest userRegisterRequest){
+    public ResponseEntity save(@RequestBody @Valid UserRegisterRequest userRegisterRequest){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRegisterRequest));
     }

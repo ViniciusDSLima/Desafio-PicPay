@@ -32,6 +32,5 @@ public class UserRegisterRequest {
     @Enumerated(EnumType.STRING)
     private TypeUser typeUser;
     @NotNull
-    @NotEmpty
     private BigDecimal balance;
 }

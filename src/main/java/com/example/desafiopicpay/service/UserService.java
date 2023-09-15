@@ -45,7 +45,8 @@ public class UserService {
 
     @Transactional
     public UserDTO save(UserRegisterRequest userRegisterRequest){
-        User user = userRepository.save(new User(userRegisterRequest));
+
+        User user = userRepository.save(UserMapper.INSTANCE.toUser(userRegisterRequest));
 
         return UserMapper.INSTANCE.toUserDTO(user);
     }
