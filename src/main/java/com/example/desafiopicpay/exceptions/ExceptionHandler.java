@@ -1,5 +1,6 @@
 package com.example.desafiopicpay.exceptions;
 
+import com.example.desafiopicpay.exceptions.errors.NoficiationException;
 import com.example.desafiopicpay.exceptions.errors.UserNotFoundException;
 import com.example.desafiopicpay.exceptions.errors.ValidacaoLojistaTransacao;
 import com.example.desafiopicpay.exceptions.errors.ValueNotAllowed;
@@ -44,6 +45,14 @@ public class ExceptionHandler {
     public ResponseEntity<Error> validacaoUsuarioNaoEncontrado(UserNotFoundException ex,
                                                            HttpServletRequest request) {
         Error error = new Error(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(), "Usuario nao encontrado",
+                ex.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    @org.springframework.web.bind.annotation.ExceptionHandler(NoficiationException.class)
+    public ResponseEntity<Error> validacaoNotificacaoNaoDisponivel(NoficiationException ex,
+                                                               HttpServletRequest request) {
+        Error error = new Error(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(), "Service not found",
                 ex.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
